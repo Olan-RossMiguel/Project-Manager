@@ -1,0 +1,44 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.welcome-box {
+    /* Estilos personalizados aquí */
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    text-align: center;
+    margin-top: 100px; /* Ajusta este valor según sea necesario */
+    width: 80%; /* opcional: se puede ajustar el ancho */
+    align-self: center; /* opcional: centrar horizontalmente dentro del flex container */
+}
+
+.display-4 {
+    font-size: 3.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+.lead {
+    font-size: 1.25rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+
+.logout-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.logout-button:hover {
+    background-color: #c82333;
+}

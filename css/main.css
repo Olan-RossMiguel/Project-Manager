@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --clr-main: #171c26;
+    --clr-main-light: #785ce9;
+    --clr-white: #ececec;
+    --clr-gray: #e2e2e2;
+    --clr-red: #961818;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Navbar superior */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--clr-main);
+    color: var(--clr-white);
+    padding: 10px 20px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    z-index: 1000;
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: var(--clr-main);
+    color: var(--clr-white);
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: var(--clr-white);
+    min-width: 160px;
+    z-index: 1001;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    top: 100%; /* Coloca el menú justo debajo de la imagen */
+    margin-top: 5px; /* Espacio entre la imagen y el menú */
+}
+
+.dropdown-content a {
+    color: var(--clr-main);
+    padding: 12px 16px;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--clr-gray);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Estilos para la imagen de perfil */
+.user-icon {
+    width: 40px; /* Tamaño pequeño */
+    height: 40px; /* Mismo valor que el width para mantenerla cuadrada */
+    border-radius: 50%; /* Hace que la imagen sea redonda */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+    border: 2px solid var(--clr-white); /* Borde blanco para mejor contraste */
+    cursor: pointer; /* Cambia el cursor a una mano para indicar que es clickeable */
+    margin-left: 10px; /* Espacio entre el icono y otros elementos */
+}
+
+/* Ajustes adicionales para el contenedor de la imagen */
+.dropdown .user-icon {
+    margin: 0; /* Elimina márgenes innecesarios */
+    padding: 0; /* Elimina relleno innecesario */
+}

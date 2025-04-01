@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+
+body {
+    padding-top: 90px; /* Ajusta este valor a la altura de tu navbar */
+    padding-left: 20px;
+    padding-right: 20px;
+}
+  /* Definir variables CSS */
+  :root {
+    --clr-main: rgb(23, 28, 38);
+    --clr-main-light: #785ce9;
+    --clr-white: #ececec;
+    --clr-gray: #e2e2e2;
+    --clr-red: #961818;
+}
+
+/* Formulario */
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
+    overflow-y: auto; /* Scroll vertical para el formulario si es necesario */
+}
+
+.formulario label {
+    font-weight: bold;
+}
+
+
+
+.formulario button {
+    background-color: var(--clr-main-light);
+    color: var(--clr-white);
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.formulario button:hover {
+    background-color: var(--clr-main);
+}
+
+ 
+
+button {
+    background-color: var(--clr-main-light);
+    color: var(--clr-white);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--clr-main);
+}
+
+/* Modal */
+#modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.modal-contenedor {
+    background-color: var(--clr-gray);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 800px; /* Ancho relativo */
+    
+    max-height: 80vh; /* Altura máxima */
+    overflow-y: auto; /* Scroll vertical si es necesario */
+    box-sizing: border-box;
+}
+
+/* Asegurar que los inputs no se desborden */
+.formulario input,
+.formulario textarea,
+.formulario select {
+width: 100%;
+max-width: 100%; /* Asegura que no se pase del contenedor */
+padding: 0.8rem;
+border: 1px solid var(--clr-gray);
+border-radius: 5px;
+font-size: 1rem;
+box-sizing: border-box; /* Evita que padding haga crecer los elementos */
+}
+
+
+/* Botón de cerrar */
+.modal-cerrar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 600px) {
+    .modal-contenedor {
+        width: 95%; /* Ocupa más ancho en pantallas pequeñas */
+        max-width: 95%;
+    }
+}
+

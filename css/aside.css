@@ -1,0 +1,123 @@
+/* Asegura que el wrapper use grid y que la navbar no afecte la altura del aside */
+.wrapper {
+    display: grid;
+    grid-template-columns: 250px 1fr; /* 250px para el aside, el resto para el main */
+    grid-template-rows: auto 1fr; /* auto para la navbar, 1fr para el contenido */
+}
+
+/* Evita que el aside se extienda por toda la página */
+aside {
+    padding: 2rem;
+    padding-right: 0;
+    color: var(--clr-white);
+    height: calc(100vh - altura_de_la_navbar); /* Ajusta la altura */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--clr-main);
+    grid-row: 2 / 3; /* Coloca el aside en la segunda fila del grid */
+}
+
+.logo {
+    font-weight: 400;
+    font-size: 1.3rem;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+/* Estilos para los botones del menú */
+.boton-menu {
+    background-color: transparent;
+    border: 0;
+    color: var(--clr-white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 600;
+    padding: 1rem;
+    font-size: .85rem;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.boton-menu:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.boton-menu.active {
+    background-color: var(--clr-white);
+    color: var(--clr-main);
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    position: relative;
+}
+
+.boton-menu.active::before {
+    content: '';
+    position: absolute;
+    width: 1rem;
+    height: 2rem;
+    bottom: 100%;
+    right: 0;
+    background-color: transparent;
+    border-bottom-right-radius: .5rem;
+    box-shadow: 0 1rem 0 var(--clr-white);
+}
+
+.boton-menu.active::after {
+    content: '';
+    position: absolute;
+    width: 1rem;
+    height: 2rem;
+    top: 100%;
+    right: 0;
+    background-color: transparent;
+    border-top-right-radius: .5rem;
+    box-shadow: 0 -1rem 0 var(--clr-white);
+}
+
+/* Estilos para los íconos */
+.boton-menu > i {
+    font-size: 1.2rem;
+}
+
+/* Estilos para el footer de la sidebar */
+.sidebar-footer {
+    padding: 1rem;
+    font-size: 0.85rem;
+    color: var(--clr-main-light);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
+}
+
+/* Estilos responsivos */
+@media screen and (max-width: 600px) {
+    aside {
+        position: fixed;
+        z-index: 9;
+        left: 0;
+        box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .75);
+        transform: translateX(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: .2s;
+    }
+
+    .aside-visible {
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .boton-menu.active::before,
+    .boton-menu.active::after {
+        display: none;
+    }
+}
