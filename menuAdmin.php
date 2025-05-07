@@ -2,44 +2,22 @@
 // menuAdmin.php
 session_start();
 
-// Verificación más estricta de la sesión
-$requiredSessionVars = ['usuario_id', 'user_id', 'usuario_nombre'];
-$hasValidSession = false;
-
-foreach ($requiredSessionVars as $var) {
-    if (isset($_SESSION[$var])) {
-        $hasValidSession = true;
-        break;
-    }
-}
-
-// Redirigir SI NO hay sesión válida
-if (!$hasValidSession) {
+// Verificación de sesión
+if (!isset($_SESSION['usuario_id'])) {
     header("Location: login.php");
     exit();
 }
 
 require_once 'conexion.php';
 
+// Obtener datos del usuario
 try {
-    // Obtener ID del usuario (compatible con ambos nombres de variable)
-    $userId = $_SESSION['usuario_id'] ?? $_SESSION['user_id'] ?? null;
-    
-    if (!$userId) {
-        header("Location: login.php");
-        exit();
-    }
-
-    // Consulta PDO
-    $query = "SELECT nombre, apellido_paterno, imagen_perfil FROM usuarios WHERE id = :id";
-    $stmt = $conn->prepare($query);
-    $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
+    $stmt = $conn->prepare("SELECT nombre, apellido_paterno, imagen_perfil FROM usuarios WHERE id = :id");
+    $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
     $stmt->execute();
-    
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$user) {
-        // Usuario no encontrado en DB - destruir sesión
         session_unset();
         session_destroy();
         header("Location: login.php");
@@ -47,59 +25,55 @@ try {
     }
     
     $profilePic = !empty($user['imagen_perfil']) ? $user['imagen_perfil'] : '/img/default_profile.png';
-    $userName = $_SESSION['usuario_nombre'] ?? $user['nombre'] ?? 'Usuario';
-    
+    $userName = htmlspecialchars($user['nombre'] . ' ' . $user['apellido_paterno']);
+
 } catch(PDOException $e) {
     error_log("Error de base de datos: " . $e->getMessage());
     header("Location: login.php");
     exit();
 }
 ?>
-
-
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Manager</title>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-   
-    <link rel="stylesheet" href="./css/styles.css">
-    <title>AdminSite</title>
+    <link rel="stylesheet" href="./css/styles.css"> <!-- Tus estilos actuales -->
+    <link rel="stylesheet" href="./css/forms.css">
+    <link rel="stylesheet" href="./css/reports.css">
+
 </head>
 <body>
-    <!-- SIDEBAR -->
-    <section id="sidebar">
-        <a href="#" class="brand">Project Manager</a>
+    <!-- SIDEBAR (Manteniendo tu estructura actual) -->
+    <section id="sidebar" class="sidebar">
+        <a href="#" class="brand" data-view="dashboard">Project Manager</a>
         <ul class="side-menu">
-            <li><a href="#" class="active"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+            <li><a href="#" class="active" data-view="dashboard"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
             <li class="divider" data-text="main">Main</li>
-            <li><a href="#"><i class='bx bxs-calendar icon'></i> Calendario</a></li>
-            <li><a href="#"><i class='bx bxs-chart icon'></i> Cronogramas</a></li>
-
+            <li><a href="#" data-view="calendario"><i class='bx bxs-calendar icon'></i> Calendario</a></li>
+          
             <li class="divider" data-text="Tablas y Formularios">Tablas y formularios</li>
             
             <li>
                 <a href="#"><i class='bx bx-table icon'></i> Reportes<i class='bx bx-chevron-right icon-right'></i></a>
                 <ul class="side-dropdown">
-                    <li><a href="#">Usuarios</a></li>
-                    <li><a href="#">Detalles de Proyectos</a></li>
+                    <li><a href="#" data-view="reporte-usuarios">Usuarios</a></li>
+                    <li><a href="#" data-view="reporte-proyectos-admin">Proyectos</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#"><i class='bx bxs-folder-plus icon'></i> Crear <i class='bx bx-chevron-right icon-right'></i></a>
                 <ul class="side-dropdown">
-                    <li><a href="../crearUsuario.php">Crear Usuario</a></li>
-                    <li><a href="#">Crear Proyecto</a></li>
+                    <li><a href="#" data-view="crear-usuario">Usuario</a></li>
+                    <li><a href="#" data-view="crear-proyecto">Proyecto</a></li>
                 </ul>
             </li>
         </ul>
     </section>
-    <!-- SIDEBAR -->
 
-    <!-- NAVBAR -->
+    <!-- CONTENIDO PRINCIPAL (Manteniendo tu estructura) -->
     <section id="content">
         <nav>
             <i class='bx bx-menu toggle-sidebar'></i>
@@ -119,29 +93,55 @@ try {
             </a>
             <span class="divider"></span>
             <div class="profile">
-                <img src="<?php echo htmlspecialchars($profilePic); ?>" alt="Foto de perfil" class="profile-img">
+                <img src="<?= $profilePic ?>" alt="Profile" class="profile-img">
                 <ul class="profile-link">
-                    <li><a href="#"><i class='bx bxs-user-circle icon'></i> <?php echo htmlspecialchars($userName); ?></a></li>
+                    <li><a href="#"><i class='bx bxs-user-circle icon'></i> <?= $userName ?></a></li>
                     <li><a href="perfil.php"><i class='bx bxs-cog'></i> Configuración</a></li>
                     <li><a href="logout.php"><i class='bx bxs-log-out-circle'></i> Cerrar sesión</a></li>
                 </ul>
             </div>
         </nav>
 
-        <!-- MAIN CONTENT -->
+        <!-- MAIN CONTENT - Área dinámica -->
         <main>
-            <h1 class="title">Dashboard</h1>
-            <ul class="breadcrumbs">
-                <li><a href="#">Home</a></li>
-                <li class="divider">/</li>
-                <li><a href="#" class="active">Dashboard</a></li>
-            </ul>
-
-           
+            <!-- Todas las vistas se cargarán aquí -->
+            <div id="dashboard" class="content-view"></div>
+            <div id="calendario" class="content-view" style="display:none;"></div>
+            <div id="reporte-usuarios" class="content-view" style="display:none;"></div>
+            <div id="reporte-proyectos-admin" class="content-view" style="display:none;"></div>
+            <div id="crear-usuario" class="content-view" style="display:none;"></div>
+            <div id="crear-proyecto" class="content-view" style="display:none;"></div>
         </main>
     </section>
+<!-- Modal de Confirmación -->
+<div id="modal-confirmacion" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modal-title">Notificación</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div id="modal-mensaje" style="padding: 20px 0;"></div>
+        <div class="modal-footer" style="text-align: right;">
+            <button id="modal-aceptar" style="padding: 8px 16px; background: #4c2252; color: white; border: none; border-radius: 4px; cursor: pointer;">Aceptar</button>
+        </div>
+    </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="./js/script.js"></script>
+    <!-- JavaScript (Mínimo necesario) -->
+    <script>
+    // Configuración global
+    const APP_CONFIG = {
+        userId: <?= $_SESSION['usuario_id'] ?>,
+        baseUrl: '<?= rtrim($_SERVER['REQUEST_URI'], '/') ?>',
+        apiBase: '/Project-Manager/api' // Añade esta línea
+    };
+</script>
+
+    
+    <script src="./js/main.js"></script>
+<!--     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
+    <script src="./js/js/script.js"></script>
+
+<!--     <script src="./js/app.js"></script> -->
 </body>
 </html>

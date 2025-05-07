@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detallar Proyecto</title>
+  <link rel="stylesheet" href="forms.css"> </head>
+<body>
+  <div class="formulario"> <h2>Detallar Proyecto</h2>
+
+    <form id="form-detallar-proyecto"> <input type="hidden" id="proyecto-id" name="id">
+
+      <div class="form-group">
+        <label>Nombre del Proyecto:</label>
+        <div id="proyecto-nombre" class="readonly-field field-locked"></div> </div>
+
+      <div class="form-group">
+        <label>Área:</label>
+        <div id="proyecto-area" class="readonly-field field-locked"></div> </div>
+
+      <div class="form-group">
+        <label for="estado">Estado Actual:</label>
+        <select id="estado" class="editable-field"> <option value="Por iniciar">Por iniciar</option>
+          <option value="En progreso">En progreso</option>
+          <option value="En revisión">En revisión</option>
+          <option value="Completado">Completado</option>
+          <option value="En retraso">En retraso</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" rows="4" class="editable-field"></textarea> </div>
+
+      <div class="form-group">
+        <label for="objetivos">Objetivos:</label>
+        <textarea id="objetivos" name="objetivos" rows="4" class="editable-field"></textarea> </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fecha_inicio">Fecha de Inicio:</label>
+          <input type="date" id="fecha_inicio" name="fecha_inicio" class="editable-field"> </div>
+
+        <div class="form-group">
+          <label for="fecha_fin">Fecha de Fin:</label>
+          <input type="date" id="fecha_fin" name="fecha_fin" class="editable-field"> </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="plataforma_repositorio">Plataforma del Repositorio:</label>
+          <select id="plataforma_repositorio" name="plataforma_repositorio" class="editable-field"> <option value="">Seleccione una plataforma</option>
+            <option value="GitHub">GitHub</option>
+            <option value="GitLab">GitLab</option>
+            <option value="Bitbucket">Bitbucket</option>
+            <option value="Otra">Otra</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="url_repositorio">URL del Repositorio:</label>
+          <input type="url" id="url_repositorio" name="url_repositorio" class="editable-field" placeholder="https://ejemplo.com/repo"> </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button> </div>
+    </form>
+  </div>
+</body>
+</html>

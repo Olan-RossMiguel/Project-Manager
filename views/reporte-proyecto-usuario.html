@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Proyecto</title>
+    </head>
+<body>
+    <div class="head-title">
+        <div class="left">
+            <h1>Mi Proyecto</h1>
+        </div>
+    </div>
+
+    <div class="table-data">
+        <div class="order">
+            <div class="head">
+                <h3>Detalles del Proyecto</h3>
+            </div>
+            <table id="tabla-mi-proyecto" class="report-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Área</th>
+                        <th>Descripción</th>
+                        <th>Objetivos</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Estado</th>
+                        <th>Cronograma</th>
+                        <th>Repositorio</th>
+                        <th>Plataforma</th>
+                    </tr>
+                </thead>
+                <tbody id="mi-proyecto-body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modal-cronograma" class="overlay-crono" style="display: none;">
+        <div class="contenedor-crono">
+            <span class="cerrar-crono" id="cerrar-modal">&times;</span>
+            <h2 class="titulo-crono">Cronograma del Proyecto</h2>
+            <div class="cuerpo-crono" id="cronograma-content">
+                <div id="gantt_chart" style="width: 100%; height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+    
+
+</body>
+</html>

@@ -595,3 +595,26 @@ main .btn-send:hover {
 		display: none;
 	}
 }
+
+
+
+.welcome-message {
+    background-color: #f8f9fa; /* Fondo claro */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+.welcome-message p {
+    margin: 0;
+    font-size: 22px;
+    color: #007bff; /* Color para resaltar el texto */
+}
+
+.content-view {
+    display: none;
+}

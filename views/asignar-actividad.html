@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar Actividad</title>
+    <!-- Tus estilos globales se cargarán desde leader.php -->
+</head>
+<body>
+    <div class="card">
+        <form id="form-asignar-actividad" class="formulario">
+            <h2>Asignar Actividad a Usuario</h2>
+    
+            <input type="hidden" id="proyecto_id" name="proyecto_id" value="">
+    
+            <div class="form-group">
+                <label for="actividad_id">Actividad:</label>
+                <select id="actividad_id" name="actividad_id" class="form-control" required>
+                    <option value="">Seleccione una actividad</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="usuario_id">Usuario:</label>
+                <select id="usuario_id" name="usuario_id" class="form-control" required>
+                    <option value="">Seleccione un usuario</option>
+                </select>
+            </div>
+    
+            <div class="form-actions">
+                <button type="button" id="btn-asignar-actividad" class="btn btn-primary">Asignar Actividad</button>
+                <button type="reset" class="btn btn-secondary">Limpiar</button>
+            </div>
+        </form>
+    </div>
+    
+
+
+
+</body>
+</html>

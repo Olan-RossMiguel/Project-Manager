@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Proyectos (Admin)</title>
+</head>
+<body>
+    <div class="head-title">
+        <div class="left">
+            <h1>Reporte de Proyectos</h1>
+        </div>
+    </div>
+
+    <div class="table-data">
+        <div class="order">
+            <div class="head">
+                <div class="form-group search">
+                    <input type="text" id="search-projects" placeholder="Buscar proyectos...">
+                    <i class='bx bx-search icon'></i>
+                </div>
+            </div>
+
+            <table id="proyectos-report-table" class="report-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Área</th>
+                        <th>Líder</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Estado</th>
+                        <th>Cronograma</th>
+                        <th>Repositorio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="proyectos-report-body">
+                    <!-- Datos dinámicos -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal de Cronograma -->
+<!-- Modal de Cronograma (versión final) -->
+<!-- Modal de Cronograma -->
+<div id="modal-cronograma" class="overlay-crono">
+    <div class="contenedor-crono">
+        <span class="cerrar-crono">&times;</span>
+        <h2 class="titulo-crono">Cronograma del Proyecto</h2>
+        <div class="cuerpo-crono" id="cronograma-content"></div>
+    </div>
+</div>
+</body>
+</html>

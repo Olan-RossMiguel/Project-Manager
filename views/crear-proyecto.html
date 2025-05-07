@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Nuevo Proyecto</title>
+   
+</head>
+<body>
+    <div class="card"> 
+        <form id="form-crear-proyecto" class="formulario">
+            <h2>Crear Nuevo Proyecto</h2>
+            <div class="form-group">
+                <label for="nombre">Nombre del Proyecto:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="area">Área:</label>
+                <select id="area" name="area" required>
+                    <option value="">Seleccione un área</option>
+                    <option value="Ciencias Básicas">Ciencias Básicas</option>
+                    <option value="Educación">Educación</option>
+                    <option value="Tecnología">Tecnología</option>
+                    <option value="Ciencias Exactas">Ciencias Exactas</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="lider_id">Líder del Proyecto:</label>
+                <select id="lider_id" name="lider_id" required>
+                    <option value="">Seleccione un líder</option>
+                    <!-- Las opciones se llenarán con JavaScript -->
+                </select>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Crear Proyecto</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Cargar líderes disponibles
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch(`${APP_CONFIG.apiBase}/obtener-lideres.php`);
+                if (!response.ok) throw new Error('Error al cargar líderes');
+                
+                const lideres = await response.json();
+                const select = document.getElementById('lider_id');
+                
+                lideres.forEach(lider => {
+                    const option = document.createElement('option');
+                    option.value = lider.id;
+                    option.textContent = `${lider.nombre} ${lider.apellido_paterno}`;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al cargar la lista de líderes');
+            }
+        });
+    </script>
+</body>
+</html>

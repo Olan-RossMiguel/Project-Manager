@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Usuarios</title>
+</head>
+<body>
+    <!-- Título principal -->
+    <div class="head-title">
+        <div class="left">
+            <h1>Reporte de Usuarios</h1>
+        </div>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="table-data">
+        <div class="order">
+            <div class="head">
+                <div class="form-group search">
+                    <input type="text" id="search-users" placeholder="Buscar usuarios...">
+                    <i class='bx bx-search icon'></i>
+                </div>
+            </div>
+
+            <table id="users-report-table" class="report-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Edad</th>
+                        <th>Correo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="users-report-body">
+                    <!-- Datos dinámicos -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación -->
+    <div id="confirmModal" style="display: none;">
+        <div class="modal-content">
+            <h2 id="confirmModalTitle">Confirmar acción</h2>
+            <p id="confirmModalText">¿Estás seguro?</p>
+            <button id="confirmYes">Sí</button>
+            <button id="confirmNo">No</button>
+        </div>
+    </div>
+</body>
+</html>

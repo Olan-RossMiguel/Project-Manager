@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Reporte de Proyecto (Líder)</title>
+   
+</head>
+<body>
+    <div class="head-title">
+        <div class="left">
+            <h1>Reporte de Proyecto</h1>
+        </div>
+    </div>
+
+    <div class="table-data">
+        <div class="order">
+           
+            <table id="tabla-reporte-lider-proyecto" class="report-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Área</th>
+                        <th>Descripción</th>
+                        <th>Objetivos</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Estado</th>
+                        <th>Cronograma</th>
+                        <th>Repositorio</th>
+                        <th>Plataforma</th>
+                    </tr>
+                </thead>
+                <tbody id="reporte-lider-proyecto-body">
+                    <!-- Aquí se insertarán los datos dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="gantt-test" style="height: 200px;"></div>
+
+    <!-- Modal de Cronograma -->
+<!-- Modal de Cronograma - Versión unificada -->
+<div id="modal-cronograma" class="overlay-crono">
+    <div class="contenedor-crono">
+        <span class="cerrar-crono" id="cerrar-modal">&times;</span>
+        <h2 class="titulo-crono">Cronograma del Proyecto</h2>
+        <div class="cuerpo-crono" id="cronograma-content">
+            <!-- Contenido dinámico del cronograma -->
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

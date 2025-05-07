@@ -24,20 +24,20 @@ require_once 'conexion.php';
 try {
     // Obtener ID del usuario (compatible con ambos nombres de variable)
     $userId = $_SESSION['usuario_id'] ?? $_SESSION['user_id'] ?? null;
-    
+
     if (!$userId) {
         header("Location: login.php");
         exit();
     }
 
-    // Consulta PDO
+    // Consulta PDO para obtener los datos del usuario
     $query = "SELECT nombre, apellido_paterno, imagen_perfil FROM usuarios WHERE id = :id";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
     $stmt->execute();
-    
+
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
     if (!$user) {
         // Usuario no encontrado en DB - destruir sesión
         session_unset();
@@ -45,61 +45,77 @@ try {
         header("Location: login.php");
         exit();
     }
-    
+
     $profilePic = !empty($user['imagen_perfil']) ? $user['imagen_perfil'] : '/img/default_profile.png';
     $userName = $_SESSION['usuario_nombre'] ?? $user['nombre'] ?? 'Usuario';
-    
-} catch(PDOException $e) {
+
+    // Obtener el nombre del proyecto
+    $proyectoNombre = 'Proyecto'; // Valor predeterminado
+
+    if (isset($_SESSION['proyecto_id'])) {
+        $proyectoId = $_SESSION['proyecto_id'];
+
+        // Consulta PDO para obtener el nombre del proyecto
+        $stmtProyecto = $conn->prepare("SELECT nombre FROM proyectos WHERE id = :id");
+        $stmtProyecto->bindParam(':id', $proyectoId, PDO::PARAM_INT);
+        $stmtProyecto->execute();
+
+        $proyecto = $stmtProyecto->fetch(PDO::FETCH_ASSOC);
+
+        if ($proyecto && !empty($proyecto['nombre'])) {
+            $proyectoNombre = $proyecto['nombre'];
+        }
+    }
+} catch (PDOException $e) {
     error_log("Error de base de datos: " . $e->getMessage());
     header("Location: login.php");
     exit();
 }
+
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-   
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/mesagge.css">
+    <link rel="stylesheet" href="./css/forms.css">
+    <link rel="stylesheet" href="./css/reports.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.5.0/dist/frappe-gantt.min.css">
     <title>AdminSite</title>
 </head>
+
 <body>
-    <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">Project Manager</a>
         <ul class="side-menu">
             <li><a href="#" class="active"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
             <li class="divider" data-text="main">Main</li>
             <li><a href="#"><i class='bx bxs-calendar icon'></i> Calendario</a></li>
-            <li><a href="#"><i class='bx bxs-chart icon'></i> Cronogramas</a></li>
-
             <li class="divider" data-text="Tablas y Formularios">Tablas y formularios</li>
-            
             <li>
                 <a href="#"><i class='bx bx-table icon'></i> Reportes<i class='bx bx-chevron-right icon-right'></i></a>
                 <ul class="side-dropdown">
-                    <li><a href="#">Usuarios</a></li>
-                    <li><a href="#">Detalles de Proyectos</a></li>
+                    <li><a href="#" data-view="reporte-equipo">Equipo</a></li>
+                    <li><a href="#" data-view="reporte-actividades">Actividades</a></li>
+                    <li><a href="#" data-view="reporte-lider-proyecto">Proyecto</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#"><i class='bx bxs-folder-plus icon'></i> Crear <i class='bx bx-chevron-right icon-right'></i></a>
+                <a href="#"><i class='bx bxs-folder-plus icon'></i> Agregar <i class='bx bx-chevron-right icon-right'></i></a>
                 <ul class="side-dropdown">
-                    <li><a href="../crearUsuario.php">Crear Usuario</a></li>
-                    <li><a href="#">Crear Proyecto</a></li>
+                    <li><a href="#" data-view="detallar-proyecto" class="nav-link detalle-proyecto" data-proyecto-id="<?= htmlspecialchars($_SESSION['proyecto_id']) ?>">Detalles</a></li>
+                    <li><a href="#" data-view="agregar-integrantes">Integrantes</a></li>
+                    <li><a href="#" data-view="agregar-actividades">Actividades</a></li>
+                    <li><a href="#" data-view="asignar-actividades">Asignar Actividades</a></li>
                 </ul>
             </li>
         </ul>
     </section>
-    <!-- SIDEBAR -->
-
-    <!-- NAVBAR -->
     <section id="content">
         <nav>
             <i class='bx bx-menu toggle-sidebar'></i>
@@ -128,20 +144,74 @@ try {
             </div>
         </nav>
 
-        <!-- MAIN CONTENT -->
         <main>
-            <h1 class="title">Dashboard</h1>
-            <ul class="breadcrumbs">
-                <li><a href="#">Home</a></li>
-                <li class="divider">/</li>
-                <li><a href="#" class="active">Dashboard</a></li>
-            </ul>
+            <div class="welcome-message">
+                <p>Bienvenido a: <?php echo htmlspecialchars($proyectoNombre); ?></p>
+            </div>
 
-           
+            <div id="dashboard" class="content-view"></div>
+            <div id="calendario" class="content-view" style="display:none;"></div>
+            <div id="reporte-equipo" class="content-view" style="display:none;"></div>
+            <div id="reporte-actividades" class="content-view" style="display:none;"></div>
+            <div id="reporte-lider-proyecto" class="content-view" style="display:none;">
+                <?php include('./views/reporte-lider-proyecto.html'); ?>
+            </div>
+            <div id="detallar-proyecto" class="content-view" style="display:none;"></div>
+            <div id="agregar-actividades" class="content-view" style="display:none;"></div>
+            <div id="agregar-integrantes" class="content-view" style="display:none;"></div>
+            <div id="asignar-actividades" class="content-view" style="display:none;"></div>
         </main>
     </section>
+    <div id="modal-confirmacion" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Notificación</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div id="modal-mensaje" style="padding: 20px 0;"></div>
+            <div class="modal-footer" style="text-align: right;">
+                <button id="modal-aceptar" class="btn-primary" style="display: none;">Aceptar</button>
+            </div>
+        </div>
+    </div>
+    <script src="./js/reporteLiderProyecto.js"></script>
+<!--     <script>
+      
+        
+        // Abrir modal (se llama desde alguna acción en tu script principal)
+        function abrirModalCronograma() {
+            document.getElementById("modal-cronograma").classList.add("active");
+        }
 
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="./js/script.js"></script>
+        // Cerrar modal al hacer clic en la X
+        document.getElementById("cerrar-modal").addEventListener("click", function () {
+            document.getElementById("modal-cronograma").classList.remove("active");
+        });
+
+        // Cerrar modal al hacer clic fuera del contenido
+        window.addEventListener("click", function (event) {
+            const modal = document.getElementById("modal-cronograma");
+            if (event.target === modal) {
+                modal.classList.remove("active");
+            }
+        });
+    </script> -->
+
+   <!-- Elimina el script de manejo del modal que está al final -->
+<!-- Reemplázalo con esto: -->
+<script>
+// Configuración global
+const APP_CONFIG = {
+    userId: <?= $userId ?>,
+    baseUrl: '<?= rtrim($_SERVER['REQUEST_URI'], '/') ?>',
+    apiBase: '/Project-Manager/api',
+    proyectoId: <?= $_SESSION['proyecto_id'] ?? 'null' ?>
+};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.0/dist/frappe-gantt.min.js"></script>
+<script src="./js/main.js" defer></script>
+<script src="./js/js/script.js" defer></script>
 </body>
+
 </html>

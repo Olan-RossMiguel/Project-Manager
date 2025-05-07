@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Equipo</title>
+</head>
+<body>
+    <div class="head-title">
+        <div class="left">
+            <h1>Reporte de Equipo</h1>
+        </div>
+    </div>
+
+    <div class="table-data">
+        <div class="order">
+            <div class="head">
+                <div class="form-group search">
+                    <input type="text" id="search-team" placeholder="Buscar integrante...">
+                    <i class='bx bx-search icon'></i>
+                </div>
+            </div>
+
+            <table id="team-report-table" class="report-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Rol en el proyecto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="team-report-body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modal-confirmacion" style="display: none;">
+        <div class="modal-content">
+            <h2 id="modal-title">Confirmar acción</h2>
+            <p id="modal-mensaje">¿Estás seguro?</p>
+            <button id="modal-aceptar">Sí</button>
+            <button id="modal-cancelar">No</button> <span class="close-modal" style="cursor: pointer;">&times;</span> </div>
+    </div>
+</body>
+</html>
