@@ -42,6 +42,7 @@ try {
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="./css/styles.css"> <!-- Tus estilos actuales -->
     <link rel="stylesheet" href="./css/forms.css">
+
     <link rel="stylesheet" href="./css/reports.css">
 
 </head>
@@ -139,6 +140,8 @@ try {
 
 <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.0/dist/frappe-gantt.min.js"></script>
     <script src="./js/main.js"></script>
+
+
 <!--     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
     <script src="./js/js/script.js"></script>
 

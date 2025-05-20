@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Proyecto</title>
-    </head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Reporte de Proyecto (Líder)</title>
+    <!-- Asegúrate de incluir los estilos necesarios -->
+    <link rel="stylesheet" href="../css/reports.css">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+</head>
 <body>
     <div class="head-title">
         <div class="left">
-            <h1>Mi Proyecto</h1>
+            <h1>Reporte de Proyecto</h1>
         </div>
     </div>
 
     <div class="table-data">
         <div class="order">
-            <div class="head">
-                <h3>Detalles del Proyecto</h3>
-            </div>
-            <table id="tabla-mi-proyecto" class="report-table">
+            <table id="tabla-reporte-lider-proyecto" class="report-table">
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -32,22 +32,25 @@
                         <th>Plataforma</th>
                     </tr>
                 </thead>
-                <tbody id="mi-proyecto-body">
-                    </tbody>
+                <tbody id="reporte-lider-proyecto-body">
+                    <!-- Aquí se insertarán los datos dinámicamente -->
+                </tbody>
             </table>
         </div>
     </div>
 
+    <!-- Modal de Cronograma - Versión unificada -->
     <div id="modal-cronograma" class="overlay-crono" style="display: none;">
         <div class="contenedor-crono">
-            <span class="cerrar-crono" id="cerrar-modal">&times;</span>
+            <span class="cerrar-crono" id="cerrar-modal-crono">&times;</span>
             <h2 class="titulo-crono">Cronograma del Proyecto</h2>
-            <div class="cuerpo-crono" id="cronograma-content">
-                <div id="gantt_chart" style="width: 100%; height: 400px;"></div>
+            <div id="cronograma-content" class="cuerpo-crono">
+                <!-- Contenido se cargará dinámicamente -->
             </div>
         </div>
     </div>
-    
 
+    <!-- Scripts necesarios -->
+    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.0/dist/frappe-gantt.min.js"></script>
 </body>
 </html>
